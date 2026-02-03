@@ -66,13 +66,13 @@
 - **Purpose:** Customer data, lead management, pipeline tracking
 
 ### Telegram (Notifications)
-- **Status:** ✅ Bot created, waiting for Chat ID
+- **Status:** ✅ COMPLETE (bot + Chat ID configured)
 - **Bot Name:** @Astriapeoplebot
 - **Bot URL:** https://t.me/Astriapeoplebot
 - **Bot Token:** 8394189992:AAF59O_hq9T1Fi_sTcfRUpks8X72t_nsrHc
-- **Chat ID:** ⏳ Awaiting (get via /getUpdates endpoint)
+- **Chat ID:** 8516106442 ✅
 - **Purpose:** Webhook notifications (new customers, errors, weekly reports)
-- **Setup:** Token secure in .env, awaiting Chat ID
+- **Status:** Ready for webhook testing
 
 ### Instantly.ai (Email)
 - **Status:** Setup needed
