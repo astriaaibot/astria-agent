@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astria Dashboard • Client Portal</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="logo">
+            <span class="icon">⚡</span>
+            <span class="text">Astria</span>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#dashboard" class="nav-link active" data-section="dashboard">📊 Dashboard</a></li>
+            <li><a href="#leads" class="nav-link" data-section="leads">🔍 Leads</a></li>
+            <li><a href="#emails" class="nav-link" data-section="emails">📧 Emails</a></li>
+            <li><a href="#appointments" class="nav-link" data-section="appointments">📅 Appointments</a></li>
+            <li><a href="#reports" class="nav-link" data-section="reports">📈 Reports</a></li>
+            <li><a href="#settings" class="nav-link" data-section="settings">⚙️ Settings</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <p class="user-name">Your Business</p>
+            <a href="#" class="logout">Sign Out</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1 id="page-title">Dashboard</h1>
+                <p id="page-subtitle">Welcome back. Here's what Astria found for you this week.</p>
+            </div>
+            <div class="header-right">
+                <div class="sync-status">
+                    <span class="status-dot online"></span>
+                    <span class="status-text">Syncing...</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard-section" class="section active">
+            <!-- KPI Cards -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-label">Leads This Week</div>
+                    <div class="kpi-value">245</div>
+                    <div class="kpi-detail">↑ 15% from last week</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Emails Sent</div>
+                    <div class="kpi-value">184</div>
+                    <div class="kpi-detail">Open rate: 42%</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Interested Replies</div>
+                    <div class="kpi-value">8</div>
+                    <div class="kpi-detail">4% reply rate</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Appointments Booked</div>
+                    <div class="kpi-value">3</div>
+                    <div class="kpi-detail">This week</div>
+                </div>
+            </div>
+
+            <!-- Charts & Activity -->
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h2 class="card-title">Pipeline Status</h2>
+                    <div class="pipeline-bars">
+                        <div class="pipeline-item">
+                            <div class="pipeline-label">New Leads</div>
+                            <div class="pipeline-bar">
+                                <div class="bar-fill" style="width: 100%"></div>
+                                <span class="bar-count">245</span>
+                            </div>
+                        </div>
+                        <div class="pipeline-item">
+                            <div class="pipeline-label">Qualified</div>
+                            <div class="pipeline-bar">
+                                <div class="bar-fill hot" style="width: 35%"></div>
+                                <span class="bar-count">86</span>
+                            </div>
+                        </div>
+                        <div class="pipeline-item">
+                            <div class="pipeline-label">Contacted</div>
+                            <div class="pipeline-bar">
+                                <div class="bar-fill warm" style="width: 75%"></div>
+                                <span class="bar-count">184</span>
+                            </div>
+                        </div>
+                        <div class="pipeline-item">
+                            <div class="pipeline-label">Opportunities</div>
+                            <div class="pipeline-bar">
+                                <div class="bar-fill success" style="width: 15%"></div>
+                                <span class="bar-count">37</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">Weekly Activity Feed</h2>
+                    <div class="activity-feed">
+                        <div class="activity-item">
+                            <span class="activity-icon">🔍</span>
+                            <div class="activity-text">
+                                <p>Found <strong>52 new leads</strong> in Broward County</p>
+                                <p class="activity-time">Today at 6:12 AM</p>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon">✍️</span>
+                            <div class="activity-text">
+                                <p><strong>42 personalized emails</strong> sent to hot leads</p>
+                                <p class="activity-time">Today at 9:30 AM</p>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon">💬</span>
+                            <div class="activity-text">
+                                <p><strong>2 interested replies</strong> received</p>
+                                <p class="activity-time">Today at 2:15 PM</p>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon">📅</span>
+                            <div class="activity-text">
+                                <p><strong>1 appointment booked</strong> for next week</p>
+                                <p class="activity-time">Yesterday at 4:45 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weekly Summary -->
+            <div class="card">
+                <h2 class="card-title">Weekly Summary</h2>
+                <div class="summary-text">
+                    <p>This week was strong. Astria found 245 new high-potential businesses and sent 184 personalized emails. So far, 8 have expressed interest in learning more, and 3 have booked discovery calls on your calendar.</p>
+                    <p>Your email open rate is 42% (well above industry average of 25%), and your reply rate is 4% (strong for cold outreach).</p>
+                    <p><strong>Next week:</strong> Astria will continue prospecting in your service area, focus on businesses with fewer online reviews (high need), and follow up on engaged prospects.</p>
+                </div>
+                <a href="#reports" class="btn-link">View Full Report →</a>
+            </div>
+        </section>
+
+        <!-- Leads Section -->
+        <section id="leads-section" class="section">
+            <div class="card">
+                <h2 class="card-title">Lead List</h2>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Business Name</th>
+                                <th>Category</th>
+                                <th>Location</th>
+                                <th>Rating</th>
+                                <th>Status</th>
+                                <th>Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>ABC Plumbing</strong></td>
+                                <td>Plumbing</td>
+                                <td>Fort Lauderdale</td>
+                                <td>⭐ 4.2</td>
+                                <td><span class="badge hot">Hot</span></td>
+                                <td>9/10</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Miami HVAC Co</strong></td>
+                                <td>HVAC</td>
+                                <td>Miami</td>
+                                <td>⭐ 3.8</td>
+                                <td><span class="badge warm">Warm</span></td>
+                                <td>7/10</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Elite Roofing</strong></td>
+                                <td>Roofing</td>
+                                <td>Pompano Beach</td>
+                                <td>⭐ 4.5</td>
+                                <td><span class="badge contacted">Contacted</span></td>
+                                <td>8/10</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <button class="btn-small">← Previous</button>
+                    <span>Page 1 of 12</span>
+                    <button class="btn-small">Next →</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Emails Section -->
+        <section id="emails-section" class="section">
+            <div class="card">
+                <h2 class="card-title">Email Performance</h2>
+                <div class="metrics-grid">
+                    <div class="metric">
+                        <div class="metric-label">Total Sent</div>
+                        <div class="metric-value">184</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Open Rate</div>
+                        <div class="metric-value">42%</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Reply Rate</div>
+                        <div class="metric-value">4%</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Bounce Rate</div>
+                        <div class="metric-value">1.2%</div>
+                    </div>
+                </div>
+                <p class="metric-note">Subject lines performing best: "spotted your business" and "quick question"</p>
+            </div>
+        </section>
+
+        <!-- Appointments Section -->
+        <section id="appointments-section" class="section">
+            <div class="card">
+                <h2 class="card-title">Upcoming Appointments</h2>
+                <div class="appointments-list">
+                    <div class="appointment-item">
+                        <div class="appointment-time">Tuesday, 2:00 PM</div>
+                        <div class="appointment-details">
+                            <p><strong>John Smith</strong> - ABC Plumbing</p>
+                            <p>Discovery Call (15 min)</p>
+                        </div>
+                        <a href="#" class="appointment-link">Join →</a>
+                    </div>
+                    <div class="appointment-item">
+                        <div class="appointment-time">Thursday, 10:30 AM</div>
+                        <div class="appointment-details">
+                            <p><strong>Maria Garcia</strong> - Elite Roofing</p>
+                            <p>Discovery Call (15 min)</p>
+                        </div>
+                        <a href="#" class="appointment-link">Join →</a>
+                    </div>
+                    <div class="appointment-item">
+                        <div class="appointment-time">Friday, 3:15 PM</div>
+                        <div class="appointment-details">
+                            <p><strong>Robert Chen</strong> - Miami HVAC</p>
+                            <p>Discovery Call (15 min)</p>
+                        </div>
+                        <a href="#" class="appointment-link">Join →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reports Section -->
+        <section id="reports-section" class="section">
+            <div class="card">
+                <h2 class="card-title">Weekly Reports</h2>
+                <div class="reports-list">
+                    <div class="report-item">
+                        <div class="report-date">Week of Feb 3 - Feb 9</div>
+                        <div class="report-text">245 leads found, 8 interested, 3 appointments booked. Email open rate 42%.</div>
+                        <a href="#" class="btn-small">Download PDF</a>
+                    </div>
+                    <div class="report-item">
+                        <div class="report-date">Week of Jan 27 - Feb 2</div>
+                        <div class="report-text">198 leads found, 6 interested, 2 appointments booked. Email open rate 38%.</div>
+                        <a href="#" class="btn-small">Download PDF</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings-section" class="section">
+            <div class="card">
+                <h2 class="card-title">Account Settings</h2>
+                <div class="settings-form">
+                    <div class="form-group">
+                        <label>Business Name</label>
+                        <input type="text" value="Your HVAC Company" />
+                    </div>
+                    <div class="form-group">
+                        <label>Service Area (Cities)</label>
+                        <input type="text" value="Fort Lauderdale, Pompano Beach, Coral Springs" />
+                    </div>
+                    <div class="form-group">
+                        <label>Ideal Customer Profile (Categories)</label>
+                        <input type="text" value="HVAC, Plumbing, Roofing" />
+                    </div>
+                    <div class="form-group">
+                        <label>Discovery Call Link</label>
+                        <input type="text" value="https://cal.com/yourname/discovery-call" />
+                    </div>
+                    <button class="btn-primary">Save Changes</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
