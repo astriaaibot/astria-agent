@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout • Astria</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <div class="checkout-container">
+        <div class="checkout-card">
+            <h1>Complete Your Purchase</h1>
+            
+            <div id="pricing-summary">
+                <!-- Dynamically populated -->
+            </div>
+
+            <form id="payment-form">
+                <div id="card-element">
+                    <!-- Stripe card element will be inserted here -->
+                </div>
+                <div id="card-errors" role="alert"></div>
+
+                <button id="submit-button" type="submit" class="button-primary full-width">
+                    Subscribe Now
+                </button>
+            </form>
+
+            <p class="checkout-note">Secure payment powered by Stripe. Your subscription will renew monthly.</p>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Stripe
+        const stripe = Stripe('pk_test_51SwmTpEe7Idz4FdT0kMxczVfcRGq5DxBbV3RgKoQ8LqEi4Qg6PnfnGiHFDfNgNcLFfFvdZvWePqgF4V5PKCCTTm00g85p7Fvk');
+        const elements = stripe.elements();
+        const cardElement = elements.create('card');
+        cardElement.mount('#card-element');
+
+        // Get tier from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const tier = urlParams.get('tier') || 'standard';
+
+        // Stripe price IDs
+        const prices = {
+            starter: {
+                monthly: 'price_1SwnNcEe7Idz4FdTV32d7gY5',
+                setup: 'price_1SwnNcEe7Idz4FdTadnsi3bq',
+                name: 'Astria Starter',
+                total: '$99 setup + $299/month'
+            },
+            standard: {
+                monthly: 'price_1SwnNdEe7Idz4FdT9Qcg5mvi',
+                setup: 'price_1SwnNdEe7Idz4FdTPPF4VCf4',
+                name: 'Astria Standard',
+                total: '$199 setup + $699/month'
+            },
+            enterprise: {
+                monthly: 'price_1SwnNdEe7Idz4FdTZSP4y7EI',
+                setup: 'price_1SwnNeEe7Idz4FdT2IcUSXPQ',
+                name: 'Astria Enterprise',
+                total: '$299 setup + $1,299/month'
+            }
+        };
+
+        // Display pricing summary
+        const selectedPrice = prices[tier];
+        document.getElementById('pricing-summary').innerHTML = `
+            <div class="summary-item">
+                <h2>${selectedPrice.name}</h2>
+                <p>${selectedPrice.total}</p>
+            </div>
+        `;
+
+        // Handle card errors
+        cardElement.addEventListener('change', function(event) {
+            const displayError = document.getElementById('card-errors');
+            if (event.error) {
+                displayError.textContent = event.error.message;
+            } else {
+                displayError.textContent = '';
+            }
+        });
+
+        // Handle form submission
+        document.getElementById('payment-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const submitButton = document.getElementById('submit-button');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Processing...';
+
+            // Create payment method
+            const {error, paymentMethod} = await stripe.createPaymentMethod({
+                type: 'card',
+                card: cardElement
+            });
+
+            if (error) {
+                document.getElementById('card-errors').textContent = error.message;
+                submitButton.disabled = false;
+                submitButton.textContent = 'Subscribe Now';
+                return;
+            }
+
+            // Redirect to Checkout Session
+            const response = await fetch('/create-checkout-session', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    tier: tier,
+                    paymentMethodId: paymentMethod.id
+                })
+            });
+
+            const session = await response.json();
+
+            // Redirect to Stripe Checkout
+            window.location.href = session.url;
+        });
+
+        console.log('✅ Checkout page loaded for tier:', tier);
+    </script>
+
+    <style>
+        .checkout-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%);
+            padding: 20px;
+        }
+
+        .checkout-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .checkout-card h1 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: var(--gray-900);
+        }
+
+        .summary-item {
+            background: var(--gray-50);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .summary-item h2 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .summary-item p {
+            font-size: 16px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        #card-element {
+            border: 1px solid var(--gray-300);
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        #card-errors {
+            color: var(--danger);
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        #submit-button {
+            margin-bottom: 20px;
+        }
+
+        .checkout-note {
+            font-size: 12px;
+            color: var(--gray-600);
+            text-align: center;
+        }
+    </style>
+</body>
+</html>
