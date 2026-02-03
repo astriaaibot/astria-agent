@@ -42,17 +42,18 @@ Enterprise: prod_TuccnRS7xeXAjD | Monthly: price_1SwnNdEe7Idz4FdTZSP4y7EI | Setu
 ### ✅ Complete & Production-Ready
 - **8 Python scripts** (scraper, scoring, analysis, email writer/sender, reply classifier, reporter)
 - **Supabase schema** (9 tables with indexes, ready for initialization)
-- **Website: Premium Desktop + Mobile versions** (animations, modern, end-to-end flow, legal)
-  - `index.html` (desktop) - Premium redesign with animations, Book Demo, Calendly integration, dynamic year
-  - `index-mobile.html` - Modern mobile with gradients, animations, touch-optimized
-  - `checkout.html` + `checkout-mobile.html` (both with Stripe price IDs embedded, forms wired)
-  - `dashboard.html` + `dashboard-mobile.html` (post-checkout onboarding screens)
-  - `terms.html`, `privacy.html`, `contact.html` (legal pages, GDPR/CCPA compliant)
-  - Auto-detection redirects users to appropriate version
-  - Free trial button → checkout → dashboard full flow working
-  - Book Demo button → Calendly (calendly.com/astriaaibot)
-  - Email: astriaaibot@gmail.com (updated everywhere)
-  - Footer year auto-updates dynamically
+- **Website: Premium Desktop + Mobile versions** (animations, modern, end-to-end flow, legal, complete)
+  - `index.html` (desktop) - Premium with animations, Book Demo, Calendly, dynamic year (2026)
+  - `index-mobile.html` - Completely redesigned to match desktop, modern look, animations
+  - `checkout.html` + `checkout-mobile.html` (Stripe price IDs, forms wired)
+  - `dashboard.html` + `dashboard-mobile.html` (onboarding screens, dynamic year)
+  - `terms.html`, `privacy.html`, `contact.html` (legal, GDPR/CCPA compliant, updated to 2026)
+  - Auto-detection redirects mobile/desktop automatically
+  - Free trial button → checkout → dashboard (full flow working)
+  - Book Demo button → Calendly (calendly.com/astriaaibot) on every version
+  - Email: astriaaibot@gmail.com (everywhere)
+  - **Footer year auto-updates dynamically** (JavaScript: new Date().getFullYear())
+  - Mobile completely modern: glass-morphism, drifting gradients, smooth animations
 - **Stripe products** + pricing (3 plans with real Price IDs)
 - **GitHub repo** + Vercel deployment (live auto-deploy on push)
 - **Cal.com** integration script + authentication verified
