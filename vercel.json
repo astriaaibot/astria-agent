@@ -1,7 +1,7 @@
 {
   "buildCommand": "echo 'Static site'",
   "outputDirectory": "website",
-  "public": "website",
+  "public": true,
   "cleanUrls": true,
   "trailingSlash": false,
   "headers": [
