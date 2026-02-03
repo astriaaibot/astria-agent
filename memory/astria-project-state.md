@@ -105,16 +105,25 @@ Enterprise: prod_TuccnRS7xeXAjD | Monthly: price_1SwnNdEe7Idz4FdTZSP4y7EI | Setu
 3. **astriareach.com SPF/DKIM**: Domain configuration for email deliverability
 4. **Backend server**: Deploy webhook handler + API endpoints (currently local, needs hosting)
 
-## Next Steps (Priority Order)
-1. **Calendly integration** ✅ (Book Demo button configured)
-2. **Backend deployment** - Deploy webhook server to live URL (Fly.io/Railway/Heroku)
-3. User provides **Supabase keys** → initialize schema → create test client
-4. Test each Python script individually (scraper → scoring → analysis → emails → sending)
-5. Set up **Telegram webhook** (bot creation + credentials)
-6. Configure **Instantly.ai** (3 email accounts + warmup)
-7. **astriareach.com** SPF/DKIM setup (email deliverability)
-8. 7-day end-to-end test with test client
-9. Onboard first real client (discovery → ICP definition → launch)
+## Next Steps (Feb 4-7, 2026)
+
+**USER MUST COMPLETE (Blocking):**
+1. **Supabase Project** (15 min) - Get keys
+2. **Telegram Bot** (10 min) - Get token + chat ID
+3. **Backend Deploy** (30 min) - Deploy webhook server
+
+**I WILL DO (Automatic):**
+1. Initialize Supabase (5 min)
+2. Configure integrations (10 min)
+3. Test everything (1 hour)
+
+**LAUNCH: February 7, 2026** 🚀
+
+**After Launch:**
+- Onboard first customer
+- Full pipeline testing
+- Email setup (Instantly.ai)
+- Domain config (SPF/DKIM)
 
 ## Important Notes
 - **User**: Yammie, EST timezone, prefers to execute (GitHub, Stripe, etc.), wants token efficiency
