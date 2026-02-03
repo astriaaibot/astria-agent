@@ -108,9 +108,9 @@ Enterprise: prod_TuccnRS7xeXAjD | Monthly: price_1SwnNdEe7Idz4FdTZSP4y7EI | Setu
 ## Next Steps (Feb 4-7, 2026)
 
 **USER MUST COMPLETE (Blocking):**
-1. **Supabase Project** (15 min) - Get keys
-2. **Telegram Bot** (10 min) - Get token + chat ID
-3. **Backend Deploy** (30 min) - Deploy webhook server
+1. ✅ **Telegram Bot** - Bot created (@Astriapeoplebot), token stored, waiting for Chat ID
+2. ⏳ **Supabase Project** (15 min) - Get keys
+3. ⏳ **Backend Deploy** (30 min) - Deploy webhook server
 
 **I WILL DO (Automatic):**
 1. Initialize Supabase (5 min)
