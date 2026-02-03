@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Astria</title>
+    <meta name="theme-color" content="#6366f1">
+    
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a0f1e, #0f172a);
+            color: #f1f5f9;
+        }
+
+        .contact-container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #f1f5f9, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+
+        .intro {
+            text-align: center;
+            color: #cbd5e1;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .contact-card {
+            background: rgba(30, 27, 75, 0.4);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .contact-method {
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-method:last-child {
+            margin-bottom: 0;
+        }
+
+        .contact-label {
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .contact-value {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+
+        .contact-value a {
+            color: #06b6d4;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .contact-value a:hover {
+            color: #22d3ee;
+            text-decoration: underline;
+        }
+
+        .contact-divider {
+            height: 1px;
+            background: rgba(99, 102, 241, 0.15);
+            margin: 2rem 0;
+        }
+
+        .support-info {
+            background: rgba(99, 102, 241, 0.05);
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .support-info h3 {
+            color: #f1f5f9;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .support-info p {
+            color: #cbd5e1;
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+        }
+
+        .support-info ul {
+            color: #cbd5e1;
+            margin-left: 1.5rem;
+            margin-bottom: 0;
+        }
+
+        .support-info li {
+            margin-bottom: 0.5rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: #06b6d4;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .faq-section {
+            margin-top: 3rem;
+        }
+
+        .faq-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #f1f5f9;
+        }
+
+        .faq-item {
+            background: rgba(30, 27, 75, 0.4);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .faq-q {
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 0.75rem;
+        }
+
+        .faq-a {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="contact-container">
+        <a href="/" class="back-link">← Back to Home</a>
+
+        <h1>Get in Touch</h1>
+        <p class="intro">Have questions about Astria? We'd love to hear from you. Reach out anytime.</p>
+
+        <!-- Contact Methods -->
+        <div class="contact-card">
+            <div class="contact-method">
+                <span class="contact-label">📧 Email</span>
+                <p class="contact-value">
+                    <a href="mailto:astriaaibot@gmail.com">astriaaibot@gmail.com</a>
+                </p>
+                <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 0.5rem;">We typically respond within 24 hours</p>
+            </div>
+
+            <div class="contact-divider"></div>
+
+            <div class="contact-method">
+                <span class="contact-label">🌐 Website</span>
+                <p class="contact-value">
+                    <a href="https://astria.fun" target="_blank">astria.fun</a>
+                </p>
+            </div>
+
+            <div class="contact-divider"></div>
+
+            <div class="contact-method">
+                <span class="contact-label">⏰ Response Time</span>
+                <p class="contact-value" style="font-size: 1rem; color: #cbd5e1;">Business hours: Mon-Fri, 9am-6pm EST</p>
+            </div>
+        </div>
+
+        <!-- Support Info -->
+        <div class="support-info">
+            <h3>How We Can Help</h3>
+            <p>Whether you have a question about features, pricing, or need technical support, we're here to help.</p>
+            <ul>
+                <li><strong>Sales Questions:</strong> Our team can walk you through our platform and pricing</li>
+                <li><strong>Technical Support:</strong> Get help with setup, integration, or troubleshooting</li>
+                <li><strong>Feedback:</strong> Share feature requests or suggestions for improvement</li>
+                <li><strong>Enterprise Inquiries:</strong> Custom plans and dedicated support available</li>
+            </ul>
+        </div>
+
+        <!-- FAQ -->
+        <div class="faq-section">
+            <h2>Common Questions</h2>
+
+            <div class="faq-item">
+                <div class="faq-q">How long does setup take?</div>
+                <div class="faq-a">Most customers are up and running within 1-2 hours. Our onboarding wizard walks you through ICP definition, email setup, and calendar integration.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">Do you offer a free trial?</div>
+                <div class="faq-a">Yes! All new customers get a 7-day free trial with no credit card required. Full access to all platform features.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">What payment methods do you accept?</div>
+                <div class="faq-a">We accept all major credit cards (Visa, Mastercard, American Express, Discover) through Stripe. We also offer invoice billing for enterprise customers.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">Can I upgrade or downgrade my plan?</div>
+                <div class="faq-a">Yes. You can change your plan anytime from your dashboard. Changes take effect on your next billing cycle. If you upgrade, we'll prorate the new amount.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">What happens to my data if I cancel?</div>
+                <div class="faq-a">Your lead data and campaign history will be deleted within 30 days of cancellation. You can export all your data before canceling.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">Is my data secure?</div>
+                <div class="faq-a">Absolutely. We use industry-standard encryption (SSL/TLS), secure databases, and comply with GDPR, CCPA, and other privacy regulations. See our <a href="/privacy.html" style="color: #06b6d4;">Privacy Policy</a> for full details.</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
