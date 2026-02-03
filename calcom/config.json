@@ -1,0 +1,35 @@
+{
+  "api_key": "cal_live_a3359530576...",
+  "user": {
+    "name": "Astria",
+    "email": "astriaaibot@gmail.com",
+    "username": "astria",
+    "timezone": "America/New_York"
+  },
+  "events": [
+    {
+      "id": 4624058,
+      "title": "Secret meeting",
+      "slug": "secret",
+      "url": "https://cal.com/astria/secret",
+      "description": null,
+      "length": 15
+    },
+    {
+      "id": 4624057,
+      "title": "30 min meeting",
+      "slug": "30min",
+      "url": "https://cal.com/astria/30min",
+      "description": null,
+      "length": 30
+    },
+    {
+      "id": 4624059,
+      "title": "15 min meeting",
+      "slug": "15min",
+      "url": "https://cal.com/astria/15min",
+      "description": null,
+      "length": 15
+    }
+  ]
+}
