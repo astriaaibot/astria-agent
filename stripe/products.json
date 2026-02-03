@@ -1,0 +1,30 @@
+{
+  "stripe_products": [
+    {
+      "tier": "starter",
+      "product_id": "prod_Tucc6p6eVig8mX",
+      "monthly_price_id": "price_1SwnNcEe7Idz4FdTV32d7gY5",
+      "setup_price_id": "price_1SwnNcEe7Idz4FdTadnsi3bq",
+      "monthly_amount": 29900,
+      "setup_amount": 9900
+    },
+    {
+      "tier": "standard",
+      "product_id": "prod_TuccUP0JLOtFrv",
+      "monthly_price_id": "price_1SwnNdEe7Idz4FdT9Qcg5mvi",
+      "setup_price_id": "price_1SwnNdEe7Idz4FdTPPF4VCf4",
+      "monthly_amount": 69900,
+      "setup_amount": 19900
+    },
+    {
+      "tier": "enterprise",
+      "product_id": "prod_TuccnRS7xeXAjD",
+      "monthly_price_id": "price_1SwnNdEe7Idz4FdTZSP4y7EI",
+      "setup_price_id": "price_1SwnNeEe7Idz4FdT2IcUSXPQ",
+      "monthly_amount": 129900,
+      "setup_amount": 29900
+    }
+  ],
+  "publishable_key": null,
+  "created_at": "2026-02-03 12:27:14.300157"
+}
