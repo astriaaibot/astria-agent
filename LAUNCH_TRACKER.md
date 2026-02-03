@@ -19,20 +19,21 @@
 
 ## Next 3 Steps
 
-### Step 1: Telegram Chat ID (1 minute) 🔴 NOW
+### Step 1: Telegram Chat ID (1 minute) 🔴 IN PROGRESS
 ```
 1. Open Telegram
 2. Search: @Astriapeoplebot
-3. Send any message to bot
-4. Visit: https://api.telegram.org/bot8394189992:AAF59O_hq9T1Fi_sTcfRUpks8X72t_nsrHc/getUpdates
-5. Find: "chat":{"id":XXXXXXX}
-6. Send me: Your chat ID number
+3. Click START or send any message (e.g., "hi")
+4. Wait 2 seconds
+5. Visit: https://api.telegram.org/bot8394189992:AAF59O_hq9T1Fi_sTcfRUpks8X72t_nsrHc/getUpdates
+6. Find: "chat":{"id":XXXXXXX}
+7. Send me: Your chat ID number
 
 Estimated time: 1 minute
-Status: ⏳ WAITING
+Status: ⏳ WAITING FOR YOUR MESSAGE TO BOT
 ```
 
-### Step 2: Supabase Project (15 minutes) 🟡 NEXT
+### Step 2: Supabase Project (15 minutes) 🟡 NOT STARTED YET
 ```
 1. Go to: https://supabase.com
 2. Sign up / Log in
@@ -41,39 +42,38 @@ Status: ⏳ WAITING
 5. Send to me
 
 Estimated time: 15 minutes
-Status: ⏳ NOT STARTED
+Status: ⏳ READY (can do after Railway)
+Note: Need Chat ID first, then can do Supabase + Railway in parallel
 ```
 
-### Step 3: Backend Deploy (30 minutes) 🟡 AFTER SUPABASE
+### Step 3: Backend Deploy to Railway (10 minutes) 🟡 IN PROGRESS
 ```
-Choose ONE:
-a) Fly.io (recommended)
-b) Railway
-c) Heroku
+1. Sign up: https://railway.app (2 min)
+2. New Project → Deploy from GitHub (1 min)
+3. Select: astriaaibot/astria-agent (1 min)
+4. Set environment variables (3 min):
+   - STRIPE_SECRET_KEY
+   - STRIPE_WEBHOOK_SECRET
+   - TELEGRAM_BOT_TOKEN
+   - TELEGRAM_CHAT_ID (and Supabase keys later)
+5. Railway auto-deploys (2 min)
+6. Get public URL from Settings (1 min)
+7. Send URL to me (1 min)
 
-Then:
-1. Create account
-2. Create new app
-3. Upload: webhook/stripe_webhook.py + requirements.txt
-4. Set environment variables
-5. Deploy
-6. Get public URL
-7. Send to me
-
-Estimated time: 30 minutes
-Status: ⏳ NOT STARTED
+Estimated time: 10 minutes
+Status: ⏳ READY (guide: RAILWAY_DEPLOY.md)
 ```
 
 ---
 
 ## Timeline
 
-| Task | Est. Time | Status | Start | End |
-|------|-----------|--------|-------|-----|
-| Chat ID | 1 min | 🔴 NOW | - | - |
-| Supabase | 15 min | 🟡 Next | - | - |
-| Backend | 30 min | 🟡 After | - | - |
-| **Total** | **46 min** | - | - | - |
+| Task | Est. Time | Status | Notes |
+|------|-----------|--------|-------|
+| Chat ID | 1 min | 🔴 NOW | Message @Astriapeoplebot first |
+| Supabase | 15 min | 🟡 Next | Can do in parallel with Railway |
+| Railway | 10 min | 🟡 Next | Auto-deploys from GitHub |
+| **Total** | **26 min** | - | Supabase + Railway in parallel = faster |
 
 ---
 
