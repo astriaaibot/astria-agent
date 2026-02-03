@@ -1,126 +1,186 @@
 # Astria Website
 
-Modern, responsive landing page for the Astria autonomous AI sales agent.
+Complete website for Astria - Autonomous AI Sales Agent.
 
 ## Files
 
-- `index.html` — Main landing page (HTML structure)
-- `style.css` — Styling (responsive, modern design)
-- `script.js` — Interactions (smooth scrolling, animations)
+### Core Pages
+- `index.html` — Original landing page
+- `index-modern.html` — Modern redesigned landing page (recommended)
+- `dashboard.html` — Client portal (real-time metrics)
+- `checkout.html` — Stripe payment checkout
+
+### Styling
+- `style.css` — Original landing page styles
+- `style-modern.css` — Modern landing page styles
+- `dashboard.css` — Client dashboard styles
+
+### Scripts
+- `script.js` — Original landing page interactions
+- `script-modern.js` — Modern landing page interactions
+- `dashboard.js` — Dashboard interactions
+
+### Configuration
+- `favicon.svg` — Astria lightning bolt favicon
+- `manifest.json` — PWA manifest (app info, icons)
+- `robots.txt` — Search engine crawling rules
+- `sitemap.xml` — URL structure for search engines
+- `_redirects` — Vercel routing rules
+- `.htaccess` — Apache server configuration (optional)
+
+### Documentation
+- `README.md` — This file
+- `DEPLOY.md` — Deployment guide
+
+## Quick Links
+
+- **Main Site:** https://astria.fun (redirects to index-modern.html)
+- **Modern Site:** https://astria.fun/index-modern.html
+- **Dashboard:** https://astria.fun/dashboard.html
+- **Checkout:** https://astria.fun/checkout.html
 
 ## Features
 
-✅ **Hero section** with clear value prop  
-✅ **Problem/Solution comparison**  
-✅ **How It Works** (6-step process)  
-✅ **Features grid** (8 core features)  
-✅ **Pricing cards** (3 tiers)  
-✅ **FAQ section**  
-✅ **CTA to book demo**  
-✅ **Fully responsive** (mobile, tablet, desktop)  
-✅ **Smooth animations** and scroll effects  
-✅ **Modern design** with clean typography
+### Landing Page (Modern)
+- ⚡ Stunning hero section with gradient backgrounds
+- 📊 8-step automated process visualization
+- 💰 3-tier pricing (Starter, Standard, Enterprise)
+- 📈 Metrics & social proof
+- ❓ FAQ section
+- 🎯 Clear CTAs throughout
 
-## Deployment Options
+### Client Dashboard
+- 📊 Real-time KPIs (leads, emails, replies, appointments)
+- 🔍 Lead management
+- 📧 Email performance metrics
+- 📅 Appointment calendar
+- 📈 Weekly reports
+- ⚙️ Settings & configuration
 
-### Option 1: Vercel (Fastest)
+### Checkout Page
+- 🔐 Secure Stripe integration
+- 💳 Real payment processing
+- 🎯 Tier selection
+- 📝 Order summary
+
+## Deployment
+
+### Vercel (Recommended)
 ```bash
-npm install -g vercel
-vercel
-# Follow prompts, select this folder
+vercel --prod
 ```
 
-### Option 2: Netlify
+### GitHub Pages
 ```bash
-npm install -g netlify-cli
-netlify deploy --prod --dir .
+git add .
+git commit -m "Update website"
+git push origin main
 ```
 
-### Option 3: GitHub Pages
-1. Push to GitHub
-2. Enable Pages in repo settings
-3. Set deploy branch to `main`
+### Self-Hosted
+Copy all files to your web server public directory.
 
-### Option 4: Self-hosted (your server)
-```bash
-# Copy files to your web server
-scp -r ./* user@astria.fun:/var/www/html/
-```
+## Icons & Branding
 
-## Customization
+- **Favicon:** Lightning bolt (⚡) in gradient (Indigo → Cyan)
+- **Colors:** 
+  - Primary: `#6366f1` (Indigo)
+  - Accent: `#06b6d4` (Cyan)
+- **Fonts:** 
+  - Headlines: Space Grotesk (bold, modern)
+  - Body: Inter (clean, readable)
 
-### Update Domain
-- Find `https://cal.com/astria/discovery-call` and replace with your Cal.com link
-- Find `hello@astria.fun` and replace with your contact email
+## SEO & Optimization
 
-### Update Colors
-Edit `:root` variables in `style.css`:
-```css
---primary: #0066ff;        /* Main blue */
---primary-dark: #0052cc;   /* Hover blue */
---secondary: #ff6b35;      /* Orange accent */
-```
-
-### Update Copy
-Edit text directly in `index.html`:
-- Hero title and subtitle
-- Feature descriptions
-- Pricing details
-- FAQ answers
-
-## Analytics (Optional)
-
-Add Google Analytics:
-```html
-<!-- Add before </head> -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=GA_ID"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'GA_ID');
-</script>
-```
-
-## SEO Optimization
-
-Update in `index.html` `<head>`:
-```html
-<meta name="description" content="...">
-<meta name="keywords" content="...">
-<meta property="og:title" content="...">
-<meta property="og:description" content="...">
-<meta property="og:image" content="...">
-```
-
-## Testing
-
-Open `index.html` in a browser:
-```bash
-open index.html
-```
-
-Or use a local server:
-```bash
-python3 -m http.server 8000
-# Visit http://localhost:8000
-```
+- ✅ Favicon for browser tab
+- ✅ Manifest.json for PWA
+- ✅ Robots.txt for search engines
+- ✅ Sitemap.xml for indexing
+- ✅ Meta tags (OG, description)
+- ✅ Responsive design (mobile-first)
+- ✅ GZIP compression support
 
 ## Performance
 
-- Lightweight (no external dependencies)
-- Fast load time (<1s)
-- Mobile-optimized
-- SEO-friendly
-- Accessibility-conscious
+- ⚡ Fast load times
+- 📱 Mobile optimized
+- 🎨 Smooth animations
+- 🔒 Secure (HTTPS)
 
 ## Browser Support
 
-- Chrome/Edge: Latest 2 versions
-- Firefox: Latest 2 versions
-- Safari: Latest 2 versions
-- Mobile browsers: All modern
+- Chrome (latest 2 versions)
+- Firefox (latest 2 versions)
+- Safari (latest 2 versions)
+- Edge (latest 2 versions)
+- Mobile browsers (iOS Safari, Chrome Mobile)
 
-## License
+## File Structure
 
-© 2026 Astria. All rights reserved.
+```
+website/
+├── index.html              # Original landing page
+├── index-modern.html       # Modern landing page (recommended)
+├── dashboard.html          # Client portal
+├── checkout.html           # Payment checkout
+│
+├── style.css               # Original styles
+├── style-modern.css        # Modern styles
+├── dashboard.css           # Dashboard styles
+│
+├── script.js               # Original interactions
+├── script-modern.js        # Modern interactions
+├── dashboard.js            # Dashboard interactions
+│
+├── favicon.svg             # Browser icon
+├── manifest.json           # PWA config
+├── robots.txt              # SEO crawler rules
+├── sitemap.xml             # URL structure
+├── _redirects              # Vercel routing
+├── .htaccess               # Apache config
+│
+├── README.md               # This file
+└── DEPLOY.md               # Deployment guide
+```
+
+## Testing Checklist
+
+- [ ] Homepage loads (landing page)
+- [ ] Modern design loads (`/index-modern.html`)
+- [ ] Dashboard loads (`/dashboard.html`)
+- [ ] Checkout page loads (`/checkout.html`)
+- [ ] All links work
+- [ ] Favicon appears in browser tab
+- [ ] Mobile responsive (test on phone)
+- [ ] Stripe test card works (4242 4242 4242 4242)
+- [ ] Animations smooth
+- [ ] Page loads in <3 seconds
+
+## Maintenance
+
+### Weekly
+- Check analytics
+- Monitor checkout flow
+- Test links
+
+### Monthly
+- Update copy if needed
+- Review metrics
+- Check for broken links
+
+### Quarterly
+- Update sitemap.xml
+- Refresh CSS/JS if bugs found
+- Security audit
+
+## Support
+
+- Landing Page: `https://astria.fun`
+- Dashboard: `https://astria.fun/dashboard.html`
+- Checkout: `https://astria.fun/checkout.html`
+- Contact: hello@astria.fun
+
+---
+
+**Last Updated:** 2026-02-03  
+**Status:** ✅ Ready for Production

@@ -1,0 +1,9 @@
+# Vercel redirects
+/modern /index-modern.html 200
+/app /dashboard.html 200
+/checkout-starter /checkout.html?tier=starter 200
+/checkout-standard /checkout.html?tier=standard 200
+/checkout-enterprise /checkout.html?tier=enterprise 200
+
+# Security headers
+/*  index.html  200
