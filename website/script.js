@@ -6,6 +6,17 @@ function scrollToContact() {
     contactSection.scrollIntoView({ behavior: 'smooth' });
 }
 
+// Checkout function (will integrate with Stripe)
+function checkout(tier) {
+    console.log(`Checkout: ${tier}`);
+    // TODO: Integrate with Stripe checkout
+    // window.location.href = `/checkout?tier=${tier}`;
+    
+    // For now, redirect to contact
+    alert(`Thank you for choosing ${tier}! We'll follow up shortly.`);
+    scrollToContact();
+}
+
 // Navbar scroll effect
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');

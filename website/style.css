@@ -425,7 +425,14 @@ body {
 .pricing-card h3 {
     font-size: 24px;
     font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.pricing-subtext {
+    font-size: 13px;
+    color: var(--gray-600);
     margin-bottom: 20px;
+    line-height: 1.4;
 }
 
 .price {
