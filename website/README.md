@@ -178,7 +178,7 @@ website/
 - Landing Page: `https://astria.fun`
 - Dashboard: `https://astria.fun/dashboard.html`
 - Checkout: `https://astria.fun/checkout.html`
-- Contact: hello@astria.fun
+- Contact: astriaaibot@gmail.com
 
 ---
 

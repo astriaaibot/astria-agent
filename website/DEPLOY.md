@@ -92,7 +92,7 @@ After deploying, verify:
 - [ ] **Homepage loads:** https://astria.fun
 - [ ] **Responsive:** Works on mobile + desktop
 - [ ] **Links work:** Click "Book a Demo" → Cal.com
-- [ ] **Email link works:** Click "hello@astria.fun"
+- [ ] **Email link works:** Click "astriaaibot@gmail.com"
 - [ ] **Navigation smooth:** Scroll to sections works
 - [ ] **SSL cert:** HTTPS shows locked padlock
 

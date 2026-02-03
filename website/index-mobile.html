@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Astria - AI Sales Agent for Local Services</title>
-    <meta name="description" content="50+ qualified leads daily. AI finds them, scores them, personalizes outreach, handles replies, books appointments.">
+    <meta name="description" content="50+ qualified leads daily. AI finds, scores, personalizes outreach, handles replies, books appointments.">
     <meta name="theme-color" content="#6366f1">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
     <link rel="apple-touch-icon" href="/favicon.svg">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -27,8 +26,6 @@
             --accent-light: #22d3ee;
             --bg-dark: #0f172a;
             --bg-darker: #0a0f1e;
-            --bg-card: rgba(30, 27, 75, 0.4);
-            --border: rgba(99, 102, 241, 0.15);
             --text-primary: #f1f5f9;
             --text-secondary: #cbd5e1;
             --text-muted: #94a3b8;
@@ -43,12 +40,11 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
             background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
             color: var(--text-primary);
-            line-height: 1.6;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* Animated background gradients */
+        /* Animated background */
         body::before {
             content: '';
             position: fixed;
@@ -56,7 +52,8 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle at 30% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
             pointer-events: none;
             animation: drift 20s ease-in-out infinite;
             z-index: -1;
@@ -64,21 +61,21 @@
 
         @keyframes drift {
             0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(20px, 20px); }
+            50% { transform: translate(15px, -15px); }
         }
 
         /* Header */
         header {
-            background: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(20px);
             padding: 1.2rem 1.5rem;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
             position: sticky;
             top: 0;
             z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .logo {
@@ -88,30 +85,47 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
-        .logo svg {
-            width: 26px;
-            height: 26px;
-            filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.4));
+        .nav-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Main */
+        main {
+            min-height: 100vh;
+            padding: 0;
         }
 
         /* Hero */
         .hero {
-            padding: 3rem 1.5rem 2rem;
+            padding: 3rem 1.5rem 2.5rem;
             text-align: center;
-            position: relative;
-            z-index: 1;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         h1 {
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 900;
+            line-height: 1.2;
             margin-bottom: 1rem;
-            line-height: 1.1;
             background: linear-gradient(135deg, var(--text-primary), var(--accent-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -134,9 +148,9 @@
         }
 
         .stat-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
+            background: rgba(99, 102, 241, 0.08);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 12px;
             padding: 1.2rem;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
@@ -144,12 +158,12 @@
 
         .stat-box:active {
             transform: translateY(-4px);
-            border-color: rgba(99, 102, 241, 0.3);
-            background: rgba(99, 102, 241, 0.08);
+            border-color: rgba(99, 102, 241, 0.4);
+            background: rgba(99, 102, 241, 0.12);
         }
 
         .stat-value {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 800;
             color: var(--accent);
             display: block;
@@ -157,73 +171,72 @@
         }
 
         .stat-label {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--text-muted);
         }
 
-        /* CTA Buttons */
+        /* CTA */
         .cta-group {
             display: grid;
-            gap: 0.8rem;
+            gap: 1rem;
         }
 
         .btn {
-            padding: 1.1rem;
+            padding: 1rem;
             border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             text-decoration: none;
-            display: inline-block;
-            text-align: center;
-            user-select: none;
-            min-height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
+            min-height: 48px;
+            user-select: none;
         }
 
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
-            font-weight: 700;
+            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.25);
         }
 
         .btn-primary:active {
             transform: scale(0.97);
-            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.2);
+            box-shadow: 0 6px 12px rgba(99, 102, 241, 0.15);
         }
 
         .btn-secondary {
-            background: var(--bg-card);
+            background: rgba(99, 102, 241, 0.1);
             color: var(--accent);
-            border: 1.5px solid rgba(6, 182, 212, 0.4);
-            font-weight: 600;
+            border: 1.5px solid rgba(99, 102, 241, 0.3);
         }
 
         .btn-secondary:active {
-            background: rgba(6, 182, 212, 0.1);
+            background: rgba(99, 102, 241, 0.15);
             border-color: var(--accent);
         }
 
         /* Sections */
         section {
             padding: 2.5rem 1.5rem;
-            position: relative;
-            z-index: 1;
-            border-bottom: 1px solid var(--border);
+            border-top: 1px solid rgba(99, 102, 241, 0.1);
+            animation: fadeIn 0.8s ease;
         }
 
         .section-title {
-            font-size: 1.7rem;
+            font-size: 1.6rem;
             font-weight: 800;
             margin-bottom: 1.5rem;
             text-align: center;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         /* Features */
@@ -234,39 +247,40 @@
         }
 
         .feature-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
+            background: rgba(99, 102, 241, 0.08);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 12px;
             padding: 1.5rem;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
 
         .feature-card:active {
-            transform: translateY(-6px);
-            border-color: rgba(99, 102, 241, 0.3);
-            background: rgba(99, 102, 241, 0.1);
+            transform: translateY(-4px);
+            border-color: rgba(99, 102, 241, 0.4);
+            background: rgba(99, 102, 241, 0.12);
         }
 
         .feature-icon {
-            font-size: 2.4rem;
-            margin-bottom: 1rem;
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
             display: block;
         }
 
         .feature-title {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
+            color: var(--text-primary);
         }
 
         .feature-desc {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-secondary);
             line-height: 1.5;
         }
 
-        /* How It Works */
+        /* Steps */
         .steps-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -276,32 +290,43 @@
         .step {
             position: relative;
             padding-left: 3.5rem;
+            background: rgba(99, 102, 241, 0.06);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            border-radius: 12px;
+            padding: 1.5rem 1.5rem 1.5rem 3.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .step:active {
+            transform: translateY(-2px);
+            border-color: rgba(99, 102, 241, 0.3);
         }
 
         .step-number {
             position: absolute;
-            left: 0;
-            top: 0;
-            width: 3rem;
-            height: 3rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
+            left: 1rem;
+            top: 1.5rem;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 1.2rem;
-            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+            font-size: 1rem;
+            box-shadow: 0 6px 12px rgba(99, 102, 241, 0.2);
         }
 
         .step-title {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.35rem;
+            color: var(--text-primary);
         }
 
         .step-desc {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-secondary);
             line-height: 1.5;
         }
@@ -314,61 +339,66 @@
         }
 
         .price-card {
-            background: var(--bg-card);
-            border: 1.5px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem 1.5rem;
+            background: rgba(99, 102, 241, 0.08);
+            border: 1.5px solid rgba(99, 102, 241, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
             backdrop-filter: blur(10px);
             text-align: center;
             transition: all 0.3s ease;
-            position: relative;
         }
 
         .price-card.featured {
             border-color: var(--accent);
-            background: rgba(6, 182, 212, 0.08);
-            transform: scale(1.03);
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(99, 102, 241, 0.08));
+            transform: scale(1.02);
+        }
+
+        .price-card:active {
+            transform: translateY(-4px) scale(1);
+            border-color: var(--accent);
         }
 
         .badge {
             display: inline-block;
             background: linear-gradient(135deg, var(--primary), var(--accent));
             color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 16px;
+            font-size: 0.65rem;
             font-weight: 700;
             text-transform: uppercase;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
         }
 
         .plan-name {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
+            color: var(--text-primary);
         }
 
         .plan-price {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             font-weight: 900;
             color: var(--accent);
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.2rem;
         }
 
-        .plan-billing {
-            font-size: 0.85rem;
+        .plan-period {
+            font-size: 0.8rem;
             color: var(--text-muted);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .plan-features {
             text-align: left;
-            margin: 1.5rem 0;
-            font-size: 0.9rem;
+            margin: 1.25rem 0;
+            font-size: 0.85rem;
         }
 
         .plan-features li {
-            padding: 0.6rem 0;
+            padding: 0.4rem 0;
             color: var(--text-secondary);
             display: flex;
             align-items: center;
@@ -379,34 +409,66 @@
             content: "✓";
             color: var(--accent);
             font-weight: 800;
-            font-size: 1.2rem;
+            font-size: 1rem;
+        }
+
+        /* Results */
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .result-item {
+            background: rgba(99, 102, 241, 0.08);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 12px;
+            padding: 1.2rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.4rem;
+        }
+
+        .result-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         /* FAQ */
         .faq-item {
-            margin-bottom: 1rem;
-            border: 1px solid var(--border);
-            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            border-radius: 10px;
             overflow: hidden;
-            background: var(--bg-card);
+            background: rgba(99, 102, 241, 0.06);
             backdrop-filter: blur(10px);
         }
 
         .faq-q {
-            padding: 1.2rem;
-            background: rgba(99, 102, 241, 0.05);
+            padding: 1rem;
+            background: rgba(99, 102, 241, 0.08);
             cursor: pointer;
             font-weight: 600;
             display: flex;
             justify-content: space-between;
             align-items: center;
             user-select: none;
+            font-size: 0.95rem;
         }
 
         .faq-toggle {
-            font-size: 1.2rem;
-            transition: transform 0.3s ease;
+            font-size: 1rem;
             color: var(--accent);
+            transition: transform 0.3s ease;
         }
 
         .faq-item.active .faq-toggle {
@@ -420,107 +482,109 @@
         }
 
         .faq-item.active .faq-a {
-            max-height: 500px;
+            max-height: 300px;
         }
 
         .faq-a-content {
-            padding: 1.2rem;
+            padding: 1rem;
             color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        /* Footer */
-        footer {
-            background: rgba(10, 15, 30, 0.8);
-            border-top: 1px solid var(--border);
-            padding: 2rem 1.5rem;
-            text-align: center;
             font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        footer a {
-            color: var(--accent);
-            text-decoration: none;
-            margin: 0 0.5rem;
+            line-height: 1.5;
         }
 
         /* Bottom CTA */
         .bottom-cta {
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(6, 182, 212, 0.05));
-            border-top: 1px solid var(--border);
-            padding: 2rem 1.5rem;
+            border-top: 1px solid rgba(99, 102, 241, 0.1);
+            padding: 2.5rem 1.5rem;
             text-align: center;
             margin-bottom: 2rem;
         }
 
         .bottom-cta h2 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
+            font-weight: 800;
             margin-bottom: 0.8rem;
         }
 
         .bottom-cta p {
             color: var(--text-secondary);
             margin-bottom: 1.5rem;
+            font-size: 0.9rem;
         }
 
-        /* Mobile nav removed - using standard scroll */
-        main {
-            min-height: 100vh;
-        }
-
-        /* Links */
-        a {
-            color: var(--accent);
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        a:active {
-            color: var(--accent-light);
-        }
-
-        /* Results */
-        .result-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .result-item {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 1.2rem;
+        /* Footer */
+        footer {
+            background: rgba(10, 15, 30, 0.9);
+            border-top: 1px solid rgba(99, 102, 241, 0.1);
+            padding: 2.5rem 1.5rem;
             text-align: center;
-            backdrop-filter: blur(10px);
+            font-size: 0.8rem;
+            color: var(--text-muted);
         }
 
-        .result-value {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: var(--accent);
-            display: block;
+        .footer-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .footer-link-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-link-group h4 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            letter-spacing: 0.05em;
             margin-bottom: 0.5rem;
         }
 
-        .result-label {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: color 0.2s ease;
+        }
+
+        footer a:active {
+            color: var(--accent-light);
+        }
+
+        .footer-divider {
+            height: 1px;
+            background: rgba(99, 102, 241, 0.1);
+            margin: 1.5rem 0;
+        }
+
+        .footer-bottom {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .footer-bottom p {
+            margin-bottom: 0.5rem;
         }
     </style>
 </head>
 <body>
     <header>
         <div class="logo">⚡ Astria</div>
+        <button class="nav-btn" onclick="window.location.href='https://calendly.com/astriaaibot'">Book Demo</button>
     </header>
 
     <main>
         <!-- Hero -->
         <section class="hero">
-            <h1>50+ Leads Every Day</h1>
-            <p class="tagline">AI finds qualified prospects, writes personalized outreach, handles replies, and books appointments for you.</p>
+            <h1>50+ Qualified Leads Daily</h1>
+            <p class="tagline">AI finds prospects, scores them, personalizes outreach, handles replies, and books appointments—all automatically.</p>
             
             <div class="stats-grid">
                 <div class="stat-box">
@@ -534,8 +598,8 @@
             </div>
 
             <div class="cta-group">
-                <button class="btn btn-primary" onclick="startFreeTrial()">Start Free Trial</button>
-                <button class="btn btn-secondary" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">See How It Works</button>
+                <button class="btn btn-primary" onclick="window.location.href='https://calendly.com/astriaaibot'">📅 Book Demo</button>
+                <button class="btn btn-secondary" onclick="window.location.href='/checkout-mobile.html?price=price_1SwnNdEe7Idz4FdT9Qcg5mvi&trial=true'">Start Free Trial</button>
             </div>
         </section>
 
@@ -546,11 +610,11 @@
                 <div class="feature-card">
                     <span class="feature-icon">🔍</span>
                     <div class="feature-title">Smart Lead Generation</div>
-                    <div class="feature-desc">Scrapes Google Maps, Yelp, and directories. Finds 50+ qualified leads daily.</div>
+                    <div class="feature-desc">Scrapes Google Maps, Yelp, local directories. Finds 50+ qualified leads daily.</div>
                 </div>
                 <div class="feature-card">
                     <span class="feature-icon">🤖</span>
-                    <div class="feature-title">AI Scoring</div>
+                    <div class="feature-title">AI Lead Scoring</div>
                     <div class="feature-desc">Claude AI scores each lead 1-10. Focus only on hot prospects matching your ICP.</div>
                 </div>
                 <div class="feature-card">
@@ -565,13 +629,36 @@
                 </div>
                 <div class="feature-card">
                     <span class="feature-icon">📅</span>
-                    <div class="feature-title">Booking Integration</div>
-                    <div class="feature-desc">Connects to your Cal.com calendar. Prospects book directly. Zero follow-up.</div>
+                    <div class="feature-title">Calendar Integration</div>
+                    <div class="feature-desc">Connects to Cal.com. Prospects book directly. Zero back-and-forth.</div>
                 </div>
                 <div class="feature-card">
                     <span class="feature-icon">📊</span>
                     <div class="feature-title">Weekly Reports</div>
                     <div class="feature-desc">Every Friday: leads generated, open rates, replies, booked calls. All automated.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results -->
+        <section id="results">
+            <h2 class="section-title">Expected Results</h2>
+            <div class="result-grid">
+                <div class="result-item">
+                    <span class="result-value">50+</span>
+                    <span class="result-label">Leads/Week</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-value">40%+</span>
+                    <span class="result-label">Open Rate</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-value">3.2%</span>
+                    <span class="result-label">Reply Rate</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-value">8-12</span>
+                    <span class="result-label">Calls/Month</span>
                 </div>
             </div>
         </section>
@@ -583,7 +670,7 @@
                 <div class="step">
                     <div class="step-number">1</div>
                     <div class="step-title">We Find Leads</div>
-                    <div class="step-desc">Automated scraping finds new prospects daily from Google Maps, Yelp, and local directories.</div>
+                    <div class="step-desc">Automated scraping finds new prospects daily from Google Maps, Yelp, local directories.</div>
                 </div>
                 <div class="step">
                     <div class="step-number">2</div>
@@ -608,30 +695,7 @@
                 <div class="step">
                     <div class="step-number">6</div>
                     <div class="step-title">You Close</div>
-                    <div class="step-desc">You only talk to qualified prospects. Booking link in every email.</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Results -->
-        <section id="results">
-            <h2 class="section-title">Expected Results</h2>
-            <div class="result-grid">
-                <div class="result-item">
-                    <span class="result-value">50+</span>
-                    <span class="result-label">Leads/week</span>
-                </div>
-                <div class="result-item">
-                    <span class="result-value">40%+</span>
-                    <span class="result-label">Open rate</span>
-                </div>
-                <div class="result-item">
-                    <span class="result-value">3.2%</span>
-                    <span class="result-label">Reply rate</span>
-                </div>
-                <div class="result-item">
-                    <span class="result-value">8-12</span>
-                    <span class="result-label">Calls/month</span>
+                    <div class="step-desc">You only talk to qualified prospects. Booking link included in every email.</div>
                 </div>
             </div>
         </section>
@@ -643,20 +707,20 @@
                 <div class="price-card">
                     <div class="plan-name">Starter</div>
                     <div class="plan-price">$299</div>
-                    <div class="plan-billing">/month</div>
+                    <div class="plan-period">/month</div>
                     <ul class="plan-features">
                         <li>50 leads/week</li>
                         <li>1 email sequence</li>
                         <li>1 calendar</li>
                         <li>Basic reporting</li>
                     </ul>
-                    <button class="btn btn-primary" onclick="checkout('starter')">Get Started</button>
+                    <button class="btn btn-primary" onclick="window.location.href='/checkout-mobile.html?price=price_1SwnNcEe7Idz4FdTV32d7gY5'">Get Started</button>
                 </div>
                 <div class="price-card featured">
                     <div class="badge">Most Popular</div>
                     <div class="plan-name">Standard</div>
                     <div class="plan-price">$699</div>
-                    <div class="plan-billing">/month</div>
+                    <div class="plan-period">/month</div>
                     <ul class="plan-features">
                         <li>200 leads/week</li>
                         <li>3 email sequences</li>
@@ -664,12 +728,12 @@
                         <li>Advanced analytics</li>
                         <li>Priority support</li>
                     </ul>
-                    <button class="btn btn-primary" onclick="checkout('standard')">Get Started</button>
+                    <button class="btn btn-primary" onclick="window.location.href='/checkout-mobile.html?price=price_1SwnNdEe7Idz4FdT9Qcg5mvi'">Get Started</button>
                 </div>
                 <div class="price-card">
                     <div class="plan-name">Enterprise</div>
                     <div class="plan-price">$1,299</div>
-                    <div class="plan-billing">/month</div>
+                    <div class="plan-period">/month</div>
                     <ul class="plan-features">
                         <li>500 leads/week</li>
                         <li>Unlimited sequences</li>
@@ -677,7 +741,7 @@
                         <li>Custom reports</li>
                         <li>Dedicated support</li>
                     </ul>
-                    <button class="btn btn-primary" onclick="checkout('enterprise')">Get Started</button>
+                    <button class="btn btn-primary" onclick="window.location.href='/checkout-mobile.html?price=price_1SwnNdEe7Idz4FdTZSP4y7EI'">Get Started</button>
                 </div>
             </div>
         </section>
@@ -741,41 +805,42 @@
         <section class="bottom-cta">
             <h2>Ready to automate your sales?</h2>
             <p>Start with a 7-day free trial. No credit card required. Cancel anytime.</p>
-            <button class="btn btn-primary" onclick="startFreeTrial()">Start Free Trial</button>
+            <button class="btn btn-primary" onclick="window.location.href='https://calendly.com/astriaaibot'">📅 Book a Demo</button>
         </section>
     </main>
 
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2025 Astria. All rights reserved.</p>
-        <p><a href="/privacy.html">Privacy Policy</a> | <a href="/terms.html">Terms of Service</a></p>
-        <p style="margin-top: 1rem; font-size: 0.8rem;">Email: <a href="mailto:astriaaibot@gmail.com">astriaaibot@gmail.com</a></p>
+        <div class="footer-links">
+            <div class="footer-link-group">
+                <h4>Product</h4>
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#howitworks">How It Works</a>
+            </div>
+            <div class="footer-link-group">
+                <h4>Legal</h4>
+                <a href="/privacy.html">Privacy</a>
+                <a href="/terms.html">Terms</a>
+                <a href="/contact.html">Contact</a>
+            </div>
+            <div class="footer-link-group">
+                <h4>Connect</h4>
+                <a href="mailto:astriaaibot@gmail.com">Email</a>
+                <a href="https://calendly.com/astriaaibot">Book Demo</a>
+            </div>
+        </div>
+        <div class="footer-divider"></div>
+        <div class="footer-bottom">
+            <p>&copy; <script>document.write(new Date().getFullYear())</script> Astria. All rights reserved.</p>
+            <p>Made for local service businesses 🚀</p>
+        </div>
     </footer>
 
     <script>
         function toggleFaq(element) {
             const item = element.parentElement;
             item.classList.toggle('active');
-        }
-
-        function startFreeTrial() {
-            // Start with Standard plan as default
-            window.location.href = '/checkout-mobile.html?price=price_1SwnNdEe7Idz4FdT9Qcg5mvi&plan=standard&trial=true';
-        }
-
-        function checkout(plan) {
-            const prices = {
-                starter: 'price_1SwnNcEe7Idz4FdTV32d7gY5',
-                standard: 'price_1SwnNdEe7Idz4FdT9Qcg5mvi',
-                enterprise: 'price_1SwnNdEe7Idz4FdTZSP4y7EI'
-            };
-
-            const priceId = prices[plan];
-            if (!priceId) {
-                alert('Invalid plan');
-                return;
-            }
-
-            window.location.href = `/checkout-mobile.html?price=${priceId}&plan=${plan}`;
         }
     </script>
 </body>
