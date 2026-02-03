@@ -1,0 +1,20 @@
+{
+  "name": "astria-agent",
+  "version": "1.0.0",
+  "description": "Autonomous AI Sales Agent for Local Businesses",
+  "main": "index.js",
+  "scripts": {
+    "start": "python3 -m http.server 8000 --directory website",
+    "dev": "cd website && python3 -m http.server 3000",
+    "build": "echo 'Static site - no build needed'"
+  },
+  "keywords": [
+    "sales",
+    "ai",
+    "automation",
+    "leads",
+    "email"
+  ],
+  "author": "Pelican Pointe LLC",
+  "license": "MIT"
+}
