@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Checkout - Astria</title>
+    <meta name="theme-color" content="#6366f1">
+    <script src="https://js.stripe.com/v3/"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --accent: #06b6d4;
+            --bg-dark: #0f172a;
+            --bg-darker: #0a0f1e;
+            --bg-card: rgba(30, 27, 75, 0.4);
+            --border: rgba(99, 102, 241, 0.15);
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+            background: linear-gradient(135deg, var(--bg-darker), var(--bg-dark));
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 44px;
+            min-height: 44px;
+        }
+
+        .header-title {
+            flex: 1;
+        }
+
+        .header-title h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        /* Main */
+        main {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        /* Order Summary */
+        .order-summary {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .plan-info {
+            margin-bottom: 1rem;
+        }
+
+        .plan-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-price {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--accent);
+        }
+
+        .summary-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 1rem 0;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .summary-label {
+            color: var(--text-secondary);
+        }
+
+        .summary-value {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .summary-total {
+            padding-top: 1rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Form */
+        .form-section {
+            margin-bottom: 2rem;
+        }
+
+        .form-section-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 0.95rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .form-input::placeholder,
+        .form-select::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(6, 182, 212, 0.05);
+        }
+
+        /* Input grid for city/state */
+        .form-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-row .form-input {
+            margin-bottom: 0;
+        }
+
+        /* Stripe element */
+        .stripe-container {
+            padding: 0.95rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .stripe-container:focus-within {
+            border-color: var(--accent);
+            background: rgba(6, 182, 212, 0.05);
+        }
+
+        #card-element {
+            min-height: 54px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Messages */
+        .message {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .message.show {
+            display: block;
+        }
+
+        .error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+        }
+
+        .success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #86efac;
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: grid;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            min-height: 52px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:active:not(:disabled) {
+            transform: scale(0.97);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Security */
+        .security-note {
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 1.5rem;
+        }
+
+        .security-icon {
+            margin-right: 0.3rem;
+        }
+
+        /* Trial badge */
+        .trial-badge {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #86efac;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Padding for content */
+        main {
+            padding-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="back-btn" onclick="window.history.back()">←</button>
+        <div class="header-title">
+            <h1>Checkout</h1>
+        </div>
+    </header>
+
+    <main>
+        <!-- Trial Badge -->
+        <div id="trialBadge" class="trial-badge" style="display: none;">
+            ✨ 7-Day Free Trial • No credit card required to start
+        </div>
+
+        <!-- Order Summary -->
+        <div class="order-summary">
+            <div class="plan-info">
+                <div class="plan-name" id="planNameLabel">Plan</div>
+                <div class="plan-price" id="planPriceDisplay">$699</div>
+            </div>
+            <div class="summary-divider"></div>
+            <div class="summary-row">
+                <span class="summary-label">Plan</span>
+                <span class="summary-value" id="planTypeDisplay">Standard</span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-label">Billing</span>
+                <span class="summary-value">Monthly</span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-label">Setup Fee</span>
+                <span class="summary-value">$199</span>
+            </div>
+            <div class="summary-row summary-total">
+                <span class="summary-label">Total Today</span>
+                <span class="summary-value" id="totalDisplay">$898</span>
+            </div>
+        </div>
+
+        <!-- Messages -->
+        <div id="errorMessage" class="message error"></div>
+        <div id="successMessage" class="message success">✓ Payment successful! Redirecting...</div>
+
+        <!-- Checkout Form -->
+        <form id="checkoutForm">
+            <!-- Contact Info -->
+            <div class="form-section">
+                <div class="form-section-title">Your Information</div>
+                <input 
+                    type="email" 
+                    class="form-input" 
+                    id="email" 
+                    placeholder="your@email.com" 
+                    required
+                    autocomplete="email"
+                >
+                <input 
+                    type="text" 
+                    class="form-input" 
+                    id="businessName" 
+                    placeholder="Business Name" 
+                    required
+                    autocomplete="organization"
+                >
+            </div>
+
+            <!-- Billing Address -->
+            <div class="form-section">
+                <div class="form-section-title">Billing Address</div>
+                <input 
+                    type="text" 
+                    class="form-input" 
+                    id="address" 
+                    placeholder="Street Address" 
+                    required
+                    autocomplete="street-address"
+                >
+                <div class="form-row">
+                    <input 
+                        type="text" 
+                        class="form-input" 
+                        id="city" 
+                        placeholder="City" 
+                        required
+                        autocomplete="address-level2"
+                    >
+                    <input 
+                        type="text" 
+                        class="form-input" 
+                        id="state" 
+                        placeholder="State" 
+                        required
+                        autocomplete="address-level1"
+                    >
+                </div>
+                <input 
+                    type="text" 
+                    class="form-input" 
+                    id="zip" 
+                    placeholder="ZIP Code" 
+                    required
+                    autocomplete="postal-code"
+                >
+            </div>
+
+            <!-- Payment -->
+            <div class="form-section">
+                <div class="form-section-title">Payment Method</div>
+                <div class="stripe-container">
+                    <div id="card-element"></div>
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary" id="submitBtn">
+                    <span id="submitText">Pay Now</span>
+                </button>
+            </div>
+
+            <!-- Security -->
+            <div class="security-note">
+                <span class="security-icon">🔒</span>
+                Your payment is secure and encrypted
+            </div>
+        </form>
+    </main>
+
+    <script>
+        // Parse URL parameters
+        const params = new URLSearchParams(window.location.search);
+        const priceId = params.get('price');
+        const plan = params.get('plan') || 'standard';
+        const trial = params.get('trial') === 'true';
+
+        // Plan configuration
+        const planConfig = {
+            'price_1SwnNcEe7Idz4FdTV32d7gY5': { name: 'Starter', price: 299, setup: 199, total: 498 },
+            'price_1SwnNdEe7Idz4FdT9Qcg5mvi': { name: 'Standard', price: 699, setup: 199, total: 898 },
+            'price_1SwnNdEe7Idz4FdTZSP4y7EI': { name: 'Enterprise', price: 1299, setup: 199, total: 1498 },
+        };
+
+        const config = planConfig[priceId] || planConfig['price_1SwnNdEe7Idz4FdT9Qcg5mvi'];
+
+        // Update UI
+        document.getElementById('planNameLabel').textContent = config.name;
+        document.getElementById('planTypeDisplay').textContent = config.name;
+        document.getElementById('planPriceDisplay').textContent = '$' + config.price;
+        document.getElementById('totalDisplay').textContent = '$' + config.total;
+
+        if (trial) {
+            document.getElementById('trialBadge').style.display = 'block';
+            document.getElementById('submitText').textContent = 'Start Free Trial';
+        }
+
+        // Initialize Stripe
+        const stripe = Stripe('pk_test_51Swn4OEe7Idz4FdTKqCt8Qaz8OiR9F3OmMH0f4n3C0aAp5pKp5cC5cC5cC5cC5cC');
+        const elements = stripe.elements();
+        const cardElement = elements.create('card', {
+            style: {
+                base: {
+                    color: '#f1f5f9',
+                    fontFamily: 'system-ui, sans-serif',
+                    fontSize: '16px',
+                    '::placeholder': {
+                        color: '#94a3b8',
+                    },
+                },
+            }
+        });
+
+        cardElement.mount('#card-element');
+
+        // Form submission
+        document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitText');
+            const errorDiv = document.getElementById('errorMessage');
+
+            submitBtn.disabled = true;
+            submitText.innerHTML = '<span class="spinner"></span> Processing...';
+
+            const { token } = await stripe.createToken(cardElement);
+
+            if (token) {
+                try {
+                    // In a real app, this would call a backend API
+                    // For demo, we'll redirect to success page
+                    errorDiv.classList.remove('show');
+                    document.getElementById('successMessage').classList.add('show');
+                    
+                    setTimeout(() => {
+                        window.location.href = '/dashboard.html?session=demo&plan=' + plan;
+                    }, 2000);
+                } catch (error) {
+                    errorDiv.textContent = error.message;
+                    errorDiv.classList.add('show');
+                    submitBtn.disabled = false;
+                    submitText.textContent = trial ? 'Start Free Trial' : 'Pay Now';
+                }
+            } else if (cardElement._error) {
+                errorDiv.textContent = cardElement._error.message;
+                errorDiv.classList.add('show');
+                submitBtn.disabled = false;
+                submitText.textContent = trial ? 'Start Free Trial' : 'Pay Now';
+            }
+        });
+
+        // Card errors
+        cardElement.addEventListener('change', (event) => {
+            const errorDiv = document.getElementById('errorMessage');
+            if (event.error) {
+                errorDiv.textContent = event.error.message;
+                errorDiv.classList.add('show');
+            } else {
+                errorDiv.textContent = '';
+                errorDiv.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>

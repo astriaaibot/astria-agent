@@ -1,296 +1,189 @@
-# Astria Webhook Server
-
-Complete webhook integration for Cal.com bookings → Supabase automation.
+# Stripe Webhook Setup for Astria
 
 ## What It Does
+- ✅ Listens for `checkout.session.completed` events from Stripe
+- ✅ Creates client record in Supabase `clients` table
+- ✅ Sends Telegram notification when new customer signs up
+- ✅ Logs activity to `activities_log` for tracking
 
-When someone books a call via Cal.com:
-1. Cal.com sends webhook to your server
-2. Server receives booking details
-3. Checks if lead exists in Supabase
-4. Creates opportunity record
-5. Updates lead status to "appointment_booked"
-6. Logs activity
+## Prerequisites
+1. **Stripe Account** - test or live keys
+2. **Supabase** - Project URL + Service Role Key (webhook uses this)
+3. **Telegram Bot Token** - from BotFather on Telegram
+4. **Telegram Chat ID** - your personal chat with the bot
 
-## Setup (5 Steps)
+## Environment Variables
 
-### Step 1: Install Dependencies
-
+Add these to `.env`:
 ```bash
-pip install -r webhook/requirements.txt
-```
+# Stripe
+STRIPE_SECRET_KEY=sk_test_...  # Your Stripe secret key
+STRIPE_WEBHOOK_SECRET=whsec_...  # Generated after registering webhook
 
-### Step 2: Configure .env
-
-Add these to your `.env` file:
-
-```
+# Supabase
 SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=sbp_3bd29e93ddd96d89dd0f8a7af1c257c132406ad7
-CALCOM_API_KEY=cal_live_a335953057662d932bd4b38521999779
-WEBHOOK_URL=https://your-webhook-server.com/webhooks/calcom
-CALCOM_WEBHOOK_SECRET=optional_secret_for_security
+SUPABASE_SERVICE_ROLE_KEY=eyJhbGc...  # Service role key (NOT anon key)
+
+# Telegram
+TELEGRAM_BOT_TOKEN=123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11  # BotFather token
+TELEGRAM_CHAT_ID=987654321  # Your chat ID with bot
+
+# Server
+PORT=5000  # Or any port
 ```
 
-### Step 3: Deploy Webhook Server
+## Step 1: Create Telegram Bot
 
-#### Option A: Vercel (Easiest)
+1. Open Telegram, search for **@BotFather**
+2. Send `/newbot`
+3. Follow prompts to create a bot
+4. Copy the bot token and add to `.env` as `TELEGRAM_BOT_TOKEN`
+
+## Step 2: Get Your Telegram Chat ID
+
+1. Start a chat with your new bot (search by name in Telegram)
+2. Send any message to the bot
+3. Go to: `https://api.telegram.org/bot<YOUR_TOKEN>/getUpdates`
+4. Look for `"chat":{"id":YOUR_CHAT_ID}` 
+5. Copy the ID and add to `.env` as `TELEGRAM_CHAT_ID`
+
+## Step 3: Install Dependencies
 
 ```bash
-cd webhook
-vercel --prod
+pip install flask stripe supabase requests python-dotenv
 ```
 
-Vercel will give you a URL like: `https://your-webhook.vercel.app`
+## Step 4: Run Webhook Server
 
-#### Option B: Render
-
-1. Go to https://render.com
-2. Create new Web Service
-3. Connect GitHub repo
-4. Set Root Directory: `webhook`
-5. Build command: `pip install -r requirements.txt`
-6. Start command: `gunicorn app:app`
-7. Add environment variables from .env
-8. Deploy
-
-#### Option C: Railway
-
+### Local Testing
 ```bash
-railway link
-railway up
+python webhook/stripe_webhook.py
 ```
+Server runs on `http://localhost:5000`
 
-#### Option D: Your Own Server
+### Production Deployment (Heroku/Railway/Fly.io)
+1. Deploy the server to a public URL (e.g., `https://astria-webhook.fly.dev`)
+2. See deployment section below
 
-```bash
-cd webhook
-pip install -r requirements.txt
-python app.py
-# Or use gunicorn for production:
-gunicorn app:app --bind 0.0.0.0:5000
+## Step 5: Register Webhook with Stripe
+
+1. Go to Stripe Dashboard → **Developers** → **Webhooks**
+2. Click **Add endpoint**
+3. **Endpoint URL:** `https://your-domain.com/webhook/stripe` (or your server URL)
+4. **Events to send:** Select only `checkout.session.completed`
+5. Click **Add endpoint**
+6. Copy the signing secret (starts with `whsec_`)
+7. Add to `.env` as `STRIPE_WEBHOOK_SECRET`
+
+## Step 6: Test Webhook
+
+### Test in Stripe Dashboard
+1. Go to webhook details page
+2. Scroll to **Events** section
+3. Find `checkout.session.completed` event
+4. Click **Send test event**
+5. Check Telegram for notification
+
+### Test Live
+1. Complete a test checkout on your Astria website
+2. Wait 2-5 seconds for webhook to fire
+3. Check Telegram and Supabase `clients` table
+
+## Webhook Response Format
+
+When a new customer signs up, Telegram will receive:
 ```
+🎉 New Astria Client!
 
-### Step 4: Register Webhook with Cal.com
+Name: John's Plumbing
+Email: john@plumbing.local
+Plan: Standard
+Client ID: 123
 
-After deploying, update your webhook URL and run:
-
-```bash
-export WEBHOOK_URL=https://your-webhook.vercel.app/webhooks/calcom
-export CALCOM_API_KEY=cal_live_a335953057662d932bd4b38521999779
-python calcom/register_webhook.py
+✨ Ready to onboard!
 ```
-
-This will:
-- List existing webhooks
-- Create new webhook for BOOKING_CREATED, BOOKING_RESCHEDULED, BOOKING_CANCELLED
-- Save config to `calcom/webhook.json`
-
-### Step 5: Test It
-
-1. Visit https://cal.com/astria/15min
-2. Book a test appointment
-3. Check your webhook server logs (should see booking details)
-4. Check Supabase `opportunities` table (should have new record)
-
-## Webhook Events
-
-### BOOKING_CREATED
-When someone books a call:
-- Creates lead record (if new)
-- Creates opportunity record
-- Updates lead status to "appointment_booked"
-
-### BOOKING_RESCHEDULED
-When someone changes their appointment time:
-- Updates opportunity date/time
-- Maintains status as "scheduled"
-
-### BOOKING_CANCELLED
-When someone cancels their appointment:
-- Updates opportunity status to "cancelled"
-- Keeps record for reference
-
-## API Endpoints
-
-### GET `/health`
-Health check for monitoring.
-
-```bash
-curl https://your-webhook.vercel.app/health
-```
-
-Response:
-```json
-{
-  "status": "ok",
-  "timestamp": "2026-02-03T12:51:00.000Z"
-}
-```
-
-### POST `/webhooks/calcom`
-Receives Cal.com webhook events.
-
-Payload example:
-```json
-{
-  "triggerEvent": "BOOKING_CREATED",
-  "payload": {
-    "id": 12345,
-    "eventName": "15 min meeting",
-    "startTime": "2026-02-04T14:00:00Z",
-    "endTime": "2026-02-04T14:15:00Z",
-    "attendees": [
-      {
-        "name": "John Smith",
-        "email": "john@example.com"
-      }
-    ],
-    "organizer": {
-      "name": "Astria",
-      "email": "astriaaibot@gmail.com"
-    }
-  }
-}
-```
-
-## Database Updates
-
-When a booking is created, the webhook:
-
-1. **Creates/updates lead record** in `leads` table
-   - business_name
-   - email
-   - status: "appointment_booked"
-
-2. **Creates opportunity record** in `opportunities` table
-   - lead_id (linked to lead)
-   - client_id (if known)
-   - appointment_booked: true
-   - appointment_date & appointment_time
-   - show_status: "scheduled"
-
-3. **Logs activity** in `activities_log` table
-   - activity_type: "appointment_booked"
-   - details: booking info
-   - timestamp
-
-## Monitoring
-
-### Check Logs
-
-**Vercel:**
-```
-vercel logs webhook
-```
-
-**Render:**
-Check dashboard → Logs tab
-
-**Railway:**
-```bash
-railway logs
-```
-
-**Local:**
-```
-tail -f webhook.log
-```
-
-### Common Issues
-
-**"No payload"**
-- Cal.com webhook didn't send data
-- Check Cal.com webhook configuration
-
-**"Invalid signature"**
-- Webhook secret mismatch
-- Update CALCOM_WEBHOOK_SECRET in .env
-
-**"Supabase not connected"**
-- Missing SUPABASE_SERVICE_ROLE_KEY
-- Check .env variables
-
-**"Lead not found"**
-- Booking is from someone outside Astria campaigns
-- Creates new lead in Supabase automatically
-
-## Webhook Secret (Optional)
-
-For security, Cal.com can sign webhook requests:
-
-1. Add `CALCOM_WEBHOOK_SECRET=your_secret` to .env
-2. Re-register webhook with `register_webhook.py`
-3. Server will verify signature
-
-## Testing Locally
-
-If you want to test before deploying:
-
-```bash
-# Terminal 1: Start webhook server
-python webhook/app.py
-
-# Terminal 2: Send test request
-curl -X POST http://localhost:5000/webhooks/calcom \
-  -H "Content-Type: application/json" \
-  -d '{
-    "triggerEvent": "BOOKING_CREATED",
-    "payload": {
-      "id": 999,
-      "eventName": "Test",
-      "startTime": "2026-02-04T14:00:00Z",
-      "endTime": "2026-02-04T14:15:00Z",
-      "attendees": [{"name": "Test", "email": "test@example.com"}],
-      "organizer": {"name": "Astria", "email": "astriaaibot@gmail.com"}
-    }
-  }'
-```
-
-## Production Checklist
-
-- [ ] Webhook server deployed (Vercel/Render/Railway/own server)
-- [ ] WEBHOOK_URL environment variable set
-- [ ] Cal.com webhook registered with `register_webhook.py`
-- [ ] Test booking created and logged in Supabase
-- [ ] Monitoring alerts set up (optional)
-- [ ] Webhook secret configured (optional but recommended)
-- [ ] Database backups enabled (Supabase)
 
 ## Troubleshooting
 
-**Webhooks not firing:**
-1. Check Cal.com dashboard → Webhooks
-2. Verify webhook is "active"
-3. Check logs for delivery errors
-4. Test with manual booking
+### Webhook not firing?
+- ❌ Check Stripe Dashboard → Webhooks → Events tab for error details
+- ❌ Verify endpoint URL is publicly accessible
+- ❌ Check server logs: `python webhook/stripe_webhook.py`
 
-**Data not appearing in Supabase:**
-1. Check webhook server logs
-2. Verify SUPABASE_SERVICE_ROLE_KEY
-3. Check Supabase table permissions
-4. Manually insert test record to verify connection
+### Telegram notification not sending?
+- ❌ Verify `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` in `.env`
+- ❌ Test bot manually: `https://api.telegram.org/bot<TOKEN>/getUpdates`
+- ❌ Make sure bot has permission to send messages (start the bot first)
 
-**"Unauthorized" errors:**
-1. Verify SUPABASE_SERVICE_ROLE_KEY is correct (starts with `sbp_`)
-2. Verify CALCOM_API_KEY is correct (starts with `cal_live_`)
-3. Check Supabase API key permissions
+### Client not created in Supabase?
+- ❌ Verify `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are correct
+- ❌ Check that `clients` table exists (run `database/init_schema.sql` first)
+- ❌ Check Supabase logs for errors
 
-## Files
+### "Invalid signature"?
+- ❌ Webhook secret mismatch - re-copy from Stripe Dashboard
+- ❌ Make sure you're using `STRIPE_WEBHOOK_SECRET`, not `STRIPE_SECRET_KEY`
 
-- `app.py` — Main Flask webhook server
-- `requirements.txt` — Python dependencies
-- `vercel.json` — Vercel deployment config
-- `WEBHOOK_SETUP.md` — This file
+## Production Deployment
+
+### Option 1: Fly.io (Recommended)
+```bash
+# Install Fly CLI: https://fly.io/docs/hands-on/install-flyctl/
+
+# Create fly.toml in workspace root
+cat > fly.toml << 'EOF'
+app = "astria-webhook"
+primary_region = "iad"
+
+[env]
+  STRIPE_SECRET_KEY = "sk_test_..."
+  SUPABASE_URL = "https://..."
+  SUPABASE_SERVICE_ROLE_KEY = "..."
+  TELEGRAM_BOT_TOKEN = "..."
+  TELEGRAM_CHAT_ID = "..."
+
+[processes]
+  api = "gunicorn -w 2 webhook.stripe_webhook:app"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+EOF
+
+# Deploy
+fly launch
+fly deploy
+```
+
+### Option 2: Heroku
+```bash
+# Create Procfile
+echo "web: gunicorn webhook.stripe_webhook:app" > Procfile
+
+# Deploy
+heroku create astria-webhook
+heroku config:set STRIPE_SECRET_KEY=sk_test_...
+heroku config:set SUPABASE_URL=...
+heroku config:set SUPABASE_SERVICE_ROLE_KEY=...
+heroku config:set TELEGRAM_BOT_TOKEN=...
+heroku config:set TELEGRAM_CHAT_ID=...
+git push heroku main
+```
+
+### Option 3: Railway
+1. Connect GitHub repo
+2. Add environment variables in Railway dashboard
+3. Set start command: `gunicorn webhook.stripe_webhook:app`
+4. Deploy
 
 ## Next Steps
 
-1. ✅ Deploy webhook server
-2. ✅ Register webhook with Cal.com
-3. ✅ Test with booking
-4. → Set up reply monitoring (future)
-5. → Add email notifications (future)
+After webhook is live:
+1. ✅ Stripe webhook registered
+2. ✅ Telegram notifications working
+3. **Next:** Build client onboarding flow → trigger pipeline when client signs up
+4. **Then:** Auto-generate ICP questionnaire and send to client
 
 ---
 
-**Webhook is live when you see "BOOKING_CREATED" events in your logs!** 🔗
+Questions? Check `/webhook/stripe_webhook.py` source code for implementation details.
