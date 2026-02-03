@@ -1,5 +1,11 @@
 # Astria Project State - Critical Context
 
+## Recent Fixes (Feb 3, 2026)
+- ✅ **Removed broken Calendly links** (page didn't exist)
+- ✅ **Created built-in demo form** (/demo-request.html)
+- ✅ **All links now work** (no external dependencies)
+- ✅ **Everything self-contained on site** (no dead links)
+
 ## Documentation System Complete
 
 **Full Knowledge Base Created:** 60KB of comprehensive operational documentation
